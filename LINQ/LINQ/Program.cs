@@ -23,46 +23,46 @@ namespace LINQ
 
         private static void Main()
         {
-            problem1();
-            problem2();
-            problem3();
-            problem4();
-            problem5();
-            problem6();
-            problem7();
-            problem8();
-            problem9();
-            problem10();
-            problem11();
-            problem12();
-            problem13();
-            problem14();
-            problem15();
-            problem16();
-            problem17();
-            problem18();
-            problem19();
-            problem20();
-            problem21();
-            problem22();
-            problem23();
-            problem24();
-            problem25();
-            problem26();
-            problem27();
-            problem28();
-            problem29();
-            problem30();
-            problem31();
-            problem32();
-            problem33();
-            problem34();
-            problem35();
-            problem36();
-            problem37();
-            problem38();
+            //problem1();
+            //problem2();
+            //problem3();
+            //problem4();
+            //problem5();
+            //problem6();
+            //problem7();
+            //problem8();
+            //problem9();
+            //problem10();
+            //problem11();
+            //problem12();
+            //problem13();
+            //problem14();
+            //problem15();
+            //problem16();
+            //problem17();
+            //problem18();
+            //problem19();
+            //problem20();
+            //problem21();
+            //problem22();
+            //problem23();
+            //problem24();
+            //problem25();
+            //problem26();
+            //problem27();
+            //problem28();
+            //problem29();
+            //problem30();
+            //problem31();
+            //problem32();
+            //problem33();
+            //problem34();
+            //problem35();
+            //problem36();
+            //problem37();
+            //problem38();
             problem39();
-            problem40();
+            //problem40();
 
             Console.ReadLine();
         }
@@ -716,14 +716,15 @@ namespace LINQ
             var products = DataLoader.LoadProducts();
 
             var results = from p in products
+                orderby p.UnitPrice ascending
                 group p by p.Category
                 into category
                 select
                     new
                     {
                         Category = category.Key,
-                        ProductNam = category.OrderBy(p => p.UnitPrice).First().ProductName,
-                        ProductPrice = category.OrderBy(p => p.UnitPrice).First().UnitPrice
+                        ProductNam = category.First().ProductName,
+                        ProductPrice = category.First().UnitPrice
                     };
 
             foreach (var r in results)
@@ -733,20 +734,23 @@ namespace LINQ
                 Console.WriteLine("Product Price: {0:c}\n", r.ProductPrice);
             }
         }
+
         //39. Display the highest priced product in each category.
         private static void problem39()
         {
             var products = DataLoader.LoadProducts();
 
             var results = from p in products
-                group p by p.Category
+                          orderby p.UnitPrice descending
+                          group p by p.Category
                 into category
+                
                 select
                     new
                     {
                         Category = category.Key,
-                        ProductNam = category.OrderByDescending(p => p.UnitPrice).First().ProductName,
-                        ProductPrice = category.OrderByDescending(p => p.UnitPrice).First().UnitPrice
+                        ProductNam = category.First().ProductName,
+                        ProductPrice = category.First().UnitPrice
                     };
 
             foreach (var r in results)
